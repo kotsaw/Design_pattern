@@ -1,0 +1,47 @@
+@startuml exemple
+
+interface ComposantRequeteHttp {
+     + afficher() : String   
+}
+class RequeteHttp{
+    - children : ComposantRequeteHttp
+    + add(ComposantRequeteHttp)
+    + remove(ComposantRequeteHttp)
+    + getComposant(int) : ComposantRequeteHttp
+    + afficher() : String
+}
+class Url{
+    - path : String
+    + afficher() : String
+}
+class Header{
+    - header : HashMap
+    + convertWithIteration
+    + afficher() : String
+}
+class Body{
+    - content : String
+    + afficher() : String
+}
+
+RequeteHttp "1" *-- "many" ComposantRequeteHttp
+ComposantRequeteHttp <|-- RequeteHttp : contains
+ComposantRequeteHttp <|-- Url
+ComposantRequeteHttp <|-- Header
+ComposantRequeteHttp <|-- Body
+
+interface IServeurWeb {
+     + repondre() :void   
+}
+
+class ServeurWeb
+class ServeurWebProxy{
+    - sw : ServeurWeb
+}
+
+ServeurWebProxy ..> IServeurWeb
+ServeurWeb ..> IServeurWeb
+ServeurWeb <|-- ServeurWebProxy
+
+
+@enduml
